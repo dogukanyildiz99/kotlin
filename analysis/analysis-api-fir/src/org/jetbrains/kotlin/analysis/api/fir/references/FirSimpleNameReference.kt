@@ -9,10 +9,12 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
 import org.jetbrains.kotlin.analysis.api.fir.KtFirAnalysisSession
 import org.jetbrains.kotlin.analysis.api.fir.symbols.KtFirNamedClassOrObjectSymbol
+import org.jetbrains.kotlin.analysis.api.fir.symbols.KtFirSyntheticJavaPropertySymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KtClassKind
 import org.jetbrains.kotlin.analysis.api.symbols.KtSymbol
 import org.jetbrains.kotlin.psi.*
 
+// A class to handle simple name references other than synthetic Java property references.
 internal class KtFirSimpleNameReference(
     expression: KtSimpleNameExpression
 ) : KtSimpleNameReference(expression), KtFirReference {
@@ -38,6 +40,7 @@ internal class KtFirSimpleNameReference(
     override fun KtAnalysisSession.resolveToSymbols(): Collection<KtSymbol> {
         check(this is KtFirAnalysisSession)
         val results = FirReferenceResolveHelper.resolveSimpleNameReference(this@KtFirSimpleNameReference, this)
+            .filterNot { it is KtFirSyntheticJavaPropertySymbol }
         //This fix-up needed to resolve annotation call into annotation constructor (but not into the annotation type)
         return fixUpAnnotationCallResolveToCtor(results)
     }
