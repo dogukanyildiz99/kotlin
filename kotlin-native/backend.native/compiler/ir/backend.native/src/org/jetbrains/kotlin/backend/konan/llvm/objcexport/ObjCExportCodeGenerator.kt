@@ -315,13 +315,6 @@ internal class ObjCExportCodeGenerator(
         generateUnitContinuationToRetainedCompletionConverter(blockGenerator)
     }
 
-    fun meaningfulBridgeNameOrNull(irFunction: IrFunction?): String? {
-        if (!context.config.configuration.getBoolean(KonanConfigKeys.MEANINGFUL_BRIDGE_NAMES)) {
-            return null
-        }
-        return irFunction?.name?.asString()
-    }
-
     // Caution! Arbitrary methods shouldn't be called from Runnable thread state.
     fun ObjCExportFunctionGenerationContext.genSendMessage(
             returnType: LlvmParamType,
@@ -973,8 +966,8 @@ private inline fun ObjCExportCodeGenerator.generateObjCImpBy(
     return result
 }
 
-private fun ObjCExportCodeGenerator.generateAbstractObjCImp(methodBridge: MethodBridge): LLVMValueRef =
-        generateObjCImpBy(methodBridge) {
+private fun ObjCExportCodeGenerator.generateAbstractObjCImp(methodBridge: MethodBridge, baseMethod: IrFunction): LLVMValueRef =
+        generateObjCImpBy(methodBridge, suffix = baseMethod.computeSymbolName()) {
             callFromBridge(
                     context.llvm.Kotlin_ObjCExport_AbstractMethodCalled,
                     listOf(param(0), param(1))
@@ -988,12 +981,13 @@ private fun ObjCExportCodeGenerator.generateObjCImp(
         methodBridge: MethodBridge,
         isVirtual: Boolean = false
 ) = if (target == null) {
-    generateAbstractObjCImp(methodBridge)
+    generateAbstractObjCImp(methodBridge, baseMethod)
 } else {
     generateObjCImp(
             methodBridge,
             isDirect = !isVirtual,
-            baseMethod = baseMethod
+            baseMethod = baseMethod,
+            bridgeSuffix = (if (isVirtual) "indirect_" else "") + target.computeSymbolName()
     ) { args, resultLifetime, exceptionHandler ->
         if (target is IrConstructor && target.constructedClass.isAbstract()) {
             callFromBridge(
@@ -1014,6 +1008,7 @@ private fun ObjCExportCodeGenerator.generateObjCImp(
         methodBridge: MethodBridge,
         isDirect: Boolean,
         baseMethod: IrFunction? = null,
+        bridgeSuffix: String? = null,
         callKotlin: ObjCExportFunctionGenerationContext.(
                 args: List<LLVMValueRef>,
                 resultLifetime: Lifetime,
@@ -1022,7 +1017,7 @@ private fun ObjCExportCodeGenerator.generateObjCImp(
 ): LLVMValueRef = generateObjCImpBy(
         methodBridge,
         debugInfo = isDirect /* see below */,
-        suffix = meaningfulBridgeNameOrNull(baseMethod)
+        suffix = bridgeSuffix,
 ) {
     // Considering direct calls inlinable above. If such a call is inlined into a bridge with no debug information,
     // lldb will not decode the inlined frame even if the callee has debug information.
@@ -1207,7 +1202,7 @@ private fun effectiveThrowsClasses(method: IrFunction, symbols: KonanSymbols): L
 private fun ObjCExportCodeGenerator.generateObjCImpForArrayConstructor(
         target: IrConstructor,
         methodBridge: MethodBridge
-): LLVMValueRef = generateObjCImp(methodBridge, isDirect = true) { args, resultLifetime, exceptionHandler ->
+): LLVMValueRef = generateObjCImp(methodBridge, bridgeSuffix = target.computeSymbolName(), isDirect = true) { args, resultLifetime, exceptionHandler ->
     val arrayInstance = callFromBridge(
             context.llvm.allocArrayFunction,
             listOf(target.constructedClass.llvmTypeInfoPtr, args.first()),
@@ -1892,7 +1887,7 @@ private fun ObjCExportCodeGenerator.createThrowableAsErrorAdapter(): ObjCExportC
             valueParameters = emptyList()
     )
 
-    val imp = generateObjCImpBy(methodBridge) {
+    val imp = generateObjCImpBy(methodBridge, suffix = "throwableAsError") {
         val exception = objCReferenceToKotlin(param(0), Lifetime.ARGUMENT)
         ret(callFromBridge(context.llvm.Kotlin_ObjCExport_WrapExceptionToNSError, listOf(exception)))
     }
