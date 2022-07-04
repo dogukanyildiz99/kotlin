@@ -9,12 +9,14 @@
 #include "libkt36878_api.h"
 
 int main(int argc, char** argv) {
-    __ kotlin.root.ObjectForExample.fooValue              (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_ValueClass{nullptr});
-    __ kotlin.root.ObjectForExample.fooUsual              (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_UsualClass{nullptr});
-    __ kotlin.root.ObjectForExample.fooByteArray          (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooByteArrayNullable  (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooUByteArray         (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooUByteArrayNullable (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooFooUsual           (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_Foo{nullptr});
-    __ kotlin.root.ObjectForExample.fooFooValue           (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_Foo{nullptr});
+    auto instance = __ kotlin.root.ObjectForExample._instance ();
+    auto value =    __ kotlin.root.ObjectForExample.get_nullableVal (instance);
+    __ kotlin.root.ObjectForExample.fooValue              (instance, value);
+    __ kotlin.root.ObjectForExample.fooUsual              (instance, libkt36878_kref_UsualClass{nullptr});
+    __ kotlin.root.ObjectForExample.fooByteArray          (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooByteArrayNullable  (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooUByteArray         (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooUByteArrayNullable (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooFooUsual           (instance, libkt36878_kref_Foo{nullptr});
+    __ kotlin.root.ObjectForExample.fooFooValue           (instance, libkt36878_kref_Foo{nullptr});
 }

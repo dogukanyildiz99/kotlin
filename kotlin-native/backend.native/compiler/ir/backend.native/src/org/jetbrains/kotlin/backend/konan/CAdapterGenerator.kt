@@ -30,7 +30,6 @@ import org.jetbrains.kotlin.resolve.annotations.*
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.descriptorUtil.*
 import org.jetbrains.kotlin.types.KotlinType
-import org.jetbrains.kotlin.types.TypeUtils
 import org.jetbrains.kotlin.types.typeUtil.isNothing
 import org.jetbrains.kotlin.types.typeUtil.isUnit
 import org.jetbrains.kotlin.types.typeUtil.makeNullable
@@ -797,8 +796,8 @@ internal class CAdapterGenerator(val context: Context) : DeclarationDescriptorVi
     }
 
     private fun defineUsedTypes(scope: ExportedElementScope, indent: Int) {
-        val set = mutableSetOf<KotlinType>()
-        defineUsedTypesImpl(scope, set)
+        val usedTypes = mutableSetOf<KotlinType>()
+        defineUsedTypesImpl(scope, usedTypes)
         // Add nullable primitives.
         predefinedTypes.forEach {
             val nullableIt = it.makeNullable()
@@ -806,7 +805,7 @@ internal class CAdapterGenerator(val context: Context) : DeclarationDescriptorVi
             output("${prefix}_KNativePtr pinned;", indent + 1)
             output("} ${translateType(nullableIt)};", indent)
         }
-        set.filter { isMappedToReference(it) || it.isMarkedNullable }
+        usedTypes.filter { isMappedToReference(it) }
                 .map { translateType(it) }
                 .toSet()
                 .forEach {

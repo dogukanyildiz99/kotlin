@@ -8,7 +8,7 @@ class UsualClass(val number: UInt) {}
 class Foo<T>
 
 object ObjectForExample {
-    val nullableValгу: ValueClass? = null
+    val nullableVal: ValueClass? = ValueClass(153)
     fun fooValue(foo: ValueClass?) {
         println(foo)
     }
@@ -33,5 +33,4 @@ object ObjectForExample {
     fun fooFooUsual(foo: Foo<UsualClass>) {
         println(foo)
     }
-
 }
