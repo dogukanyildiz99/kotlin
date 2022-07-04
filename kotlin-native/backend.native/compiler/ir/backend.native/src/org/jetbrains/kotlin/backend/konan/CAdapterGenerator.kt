@@ -479,12 +479,12 @@ private class ExportedElement(val kind: ElementKind,
         return builder.toString()
     }
 
-    private fun addUsedType(type: KotlinType, set: MutableSet<ClassDescriptor>) {
+    private fun addUsedType(type: KotlinType, set: MutableSet<KotlinType>) {
         if (type.constructor.declarationDescriptor is TypeParameterDescriptor) return
-        set.addIfNotNull(TypeUtils.getClassDescriptor(type))
+        set.addIfNotNull(type)
     }
 
-    fun addUsedTypes(set: MutableSet<ClassDescriptor>) {
+    fun addUsedTypes(set: MutableSet<KotlinType>) {
         val descriptor = declaration
         when (descriptor) {
             is FunctionDescriptor -> {
@@ -497,7 +497,7 @@ private class ExportedElement(val kind: ElementKind,
                 addUsedType(original.correspondingProperty.type, set)
             }
             is ClassDescriptor -> {
-                set += descriptor
+                set += descriptor.defaultType
             }
         }
     }
@@ -787,7 +787,7 @@ internal class CAdapterGenerator(val context: Context) : DeclarationDescriptorVi
         if (kind == DefinitionKind.C_SOURCE_STRUCT) output("},", indent)
     }
 
-    private fun defineUsedTypesImpl(scope: ExportedElementScope, set: MutableSet<ClassDescriptor>) {
+    private fun defineUsedTypesImpl(scope: ExportedElementScope, set: MutableSet<KotlinType>) {
         scope.elements.forEach {
             it.addUsedTypes(set)
         }
@@ -797,7 +797,7 @@ internal class CAdapterGenerator(val context: Context) : DeclarationDescriptorVi
     }
 
     private fun defineUsedTypes(scope: ExportedElementScope, indent: Int) {
-        val set = mutableSetOf<ClassDescriptor>()
+        val set = mutableSetOf<KotlinType>()
         defineUsedTypesImpl(scope, set)
         // Add nullable primitives.
         predefinedTypes.forEach {
@@ -806,14 +806,14 @@ internal class CAdapterGenerator(val context: Context) : DeclarationDescriptorVi
             output("${prefix}_KNativePtr pinned;", indent + 1)
             output("} ${translateType(nullableIt)};", indent)
         }
-        set.forEach {
-            val type = it.defaultType
-            if (isMappedToReference(type) && !it.isInlined()) {
-                output("typedef struct {", indent)
-                output("${prefix}_KNativePtr pinned;", indent + 1)
-                output("} ${translateType(type)};", indent)
-            }
-        }
+        set.filter { isMappedToReference(it) || it.isMarkedNullable }
+                .map { translateType(it) }
+                .toSet()
+                .forEach {
+                    output("typedef struct {", indent)
+                    output("${prefix}_KNativePtr pinned;", indent + 1)
+                    output("} $it;", indent)
+                }
     }
 
     val exportedSymbols = mutableListOf<String>()

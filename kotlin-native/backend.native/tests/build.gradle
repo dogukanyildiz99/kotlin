@@ -5181,10 +5181,10 @@ dynamicTest("kt36639") {
     useGoldenData = true
 }
 
-dynamicTest("kt39015") {
+dynamicTest("kt36878") {
     disabled = (project.testTarget == 'wasm32') // wasm doesn't support -produce dynamic
-    source = "produce_dynamic/kt-39015/hello.kt"
-    cSource = "$projectDir/produce_dynamic/kt-39015/main.c"
+    source = "produce_dynamic/kt-36878/hello.kt"
+    cSource = "$projectDir/produce_dynamic/kt-36878/main.cpp"
     useGoldenData = true
 }
 

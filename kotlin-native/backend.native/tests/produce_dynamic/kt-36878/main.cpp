@@ -1,0 +1,20 @@
+/*
+ * Copyright 2010-2021 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+ */
+
+#include "testlib_api.h"
+#define __ testlib_symbols()->
+
+#include "libkt36878_api.h"
+
+int main(int argc, char** argv) {
+    __ kotlin.root.ObjectForExample.fooValue              (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_ValueClass{nullptr});
+    __ kotlin.root.ObjectForExample.fooUsual              (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_UsualClass{nullptr});
+    __ kotlin.root.ObjectForExample.fooByteArray          (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooByteArrayNullable  (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooUByteArray         (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooUByteArrayNullable (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooFooUsual           (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_Foo{nullptr});
+    __ kotlin.root.ObjectForExample.fooFooValue           (libkt36878_kref_ObjectForExample{nullptr}, libkt36878_kref_Foo{nullptr});
+}
