@@ -798,14 +798,11 @@ internal class CAdapterGenerator(val context: Context) : DeclarationDescriptorVi
     private fun defineUsedTypes(scope: ExportedElementScope, indent: Int) {
         val usedTypes = mutableSetOf<KotlinType>()
         defineUsedTypesImpl(scope, usedTypes)
-        // Add nullable primitives.
-        predefinedTypes.forEach {
-            val nullableIt = it.makeNullable()
-            output("typedef struct {", indent)
-            output("${prefix}_KNativePtr pinned;", indent + 1)
-            output("} ${translateType(nullableIt)};", indent)
-        }
-        usedTypes.filter { isMappedToReference(it) }
+        val usedReferenceTypes = usedTypes.filter { isMappedToReference(it) }
+        // Add nullable primitives, which are used in prototypes of "(*createNullable<PRIMITIVE_TYPE_NAME>)"
+        val predefinedNullableTypes = predefinedTypes.map { it.makeNullable() }
+
+        (predefinedNullableTypes + usedReferenceTypes)
                 .map { translateType(it) }
                 .toSet()
                 .forEach {
