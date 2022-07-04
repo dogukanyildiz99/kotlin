@@ -10,21 +10,21 @@ class Foo<T>
 object ObjectForExample {
     val nullableVal: ValueClass? = ValueClass(153)
     fun fooValue(foo: ValueClass?) {
-        println(foo)
+        println("ValueClass? = $foo")
     }
     fun fooUsual(foo: UsualClass?) {
-        println(foo)
+        println("UsualClass? = $foo")
     }
     fun fooUByteArray(foo: UByteArray) {
-        println(foo)
+        println("UByteArray = $foo")
     }
     fun fooUIntArrayNullable(foo: UIntArray?) {
-        println(foo)
+        println("UIntArray? = $foo")
     }
     fun fooFooValue(foo: Foo<ValueClass>) {
-        println(foo)
+        println("Foo<ValueClass> = $foo")
     }
     fun fooFooUsual(foo: Foo<UsualClass>) {
-        println(foo)
+        println("Foo<UsualClass> = $foo")
     }
 }

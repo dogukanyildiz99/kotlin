@@ -1,6 +1,6 @@
-ValueClass(number=153)
-null
-null
-null
-null
-null
+ValueClass? = ValueClass(number=153)
+UsualClass? = null
+UByteArray = null
+UIntArray? = null
+Foo<ValueClass> = null
+Foo<UsualClass> = null
