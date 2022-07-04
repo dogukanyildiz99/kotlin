@@ -15,16 +15,10 @@ object ObjectForExample {
     fun fooUsual(foo: UsualClass?) {
         println(foo)
     }
-    fun fooByteArray(foo: ByteArray) {
-        println(foo)
-    }
     fun fooUByteArray(foo: UByteArray) {
         println(foo)
     }
-    fun fooByteArrayNullable(foo: ByteArray?) {
-        println(foo)
-    }
-    fun fooUByteArrayNullable(foo: UByteArray?) {
+    fun fooUIntArrayNullable(foo: UIntArray?) {
         println(foo)
     }
     fun fooFooValue(foo: Foo<ValueClass>) {

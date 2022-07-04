@@ -11,12 +11,10 @@
 int main(int argc, char** argv) {
     auto instance = __ kotlin.root.ObjectForExample._instance ();
     auto value =    __ kotlin.root.ObjectForExample.get_nullableVal (instance);
-    __ kotlin.root.ObjectForExample.fooValue              (instance, value);
-    __ kotlin.root.ObjectForExample.fooUsual              (instance, libkt36878_kref_UsualClass{nullptr});
-    __ kotlin.root.ObjectForExample.fooByteArray          (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooByteArrayNullable  (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooUByteArray         (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooUByteArrayNullable (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
-    __ kotlin.root.ObjectForExample.fooFooUsual           (instance, libkt36878_kref_Foo{nullptr});
-    __ kotlin.root.ObjectForExample.fooFooValue           (instance, libkt36878_kref_Foo{nullptr});
+    __ kotlin.root.ObjectForExample.fooValue             (instance, value);
+    __ kotlin.root.ObjectForExample.fooUsual             (instance, libkt36878_kref_UsualClass{nullptr});
+    __ kotlin.root.ObjectForExample.fooUByteArray        (instance, libkt36878_kref_kotlin_ByteArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooUIntArrayNullable (instance, libkt36878_kref_kotlin_IntArray{nullptr});
+    __ kotlin.root.ObjectForExample.fooFooUsual          (instance, libkt36878_kref_Foo{nullptr});
+    __ kotlin.root.ObjectForExample.fooFooValue          (instance, libkt36878_kref_Foo{nullptr});
 }

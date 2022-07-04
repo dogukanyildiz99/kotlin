@@ -5188,6 +5188,13 @@ dynamicTest("kt36878") {
     useGoldenData = true
 }
 
+dynamicTest("kt39015") {
+    disabled = (project.testTarget == 'wasm32') // wasm doesn't support -produce dynamic
+    source = "produce_dynamic/kt-39015/hello.kt"
+    cSource = "$projectDir/produce_dynamic/kt-39015/main.c"
+    useGoldenData = true
+}
+
 for (i in 0..2) {
     dynamicTest("kt42796_$i") {
         clangTool = "clang++"
