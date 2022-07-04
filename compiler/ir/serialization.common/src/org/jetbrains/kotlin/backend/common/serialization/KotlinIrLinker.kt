@@ -71,16 +71,19 @@ abstract class KotlinIrLinker(
         // will return null.
         val symbol: IrSymbol? = actualModuleDeserializer?.tryDeserializeIrSymbol(idSignature, symbolKind)
 
-        return symbol ?: run {
-            if (unlinkedDeclarationsSupport.allowUnboundSymbols)
-                referenceDeserializedSymbol(symbolTable, null, symbolKind, idSignature)
-            else
+        return when {
+            unlinkedDeclarationsSupport.allowUnboundSymbols -> {
+                symbol ?: referenceDeserializedSymbol(symbolTable, null, symbolKind, idSignature)
+            }
+            symbol?.isBound != true -> {
                 throw SignatureIdNotFoundInModuleWithDependencies(
                     idSignature = idSignature,
                     problemModuleDeserializer = moduleDeserializer,
                     allModuleDeserializers = deserializersForModules.values,
                     userVisibleIrModulesSupport = userVisibleIrModulesSupport
                 ).raiseIssue(messageLogger)
+            }
+            else -> symbol
         }
     }
 
