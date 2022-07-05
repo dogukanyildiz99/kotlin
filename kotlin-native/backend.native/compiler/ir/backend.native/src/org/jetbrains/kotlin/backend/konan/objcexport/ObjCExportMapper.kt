@@ -151,6 +151,10 @@ private fun ObjCExportMapper.isBase(descriptor: CallableMemberDescriptor): Boole
         descriptor.overriddenDescriptors.all { !shouldBeExposed(it) }
         // e.g. it is not `override`, or overrides only unexposed methods.
 
+/**
+ * Check that given [descriptor] is a so-called "base method", i.e. method
+ * that doesn't override anything in a generated Objective-C interface.
+ */
 internal fun ObjCExportMapper.isBaseMethod(descriptor: FunctionDescriptor) =
         this.isBase(descriptor)
 
