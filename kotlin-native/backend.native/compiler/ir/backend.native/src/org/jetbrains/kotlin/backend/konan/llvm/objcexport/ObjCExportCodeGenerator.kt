@@ -1435,7 +1435,7 @@ private fun ObjCExportCodeGenerator.generateKotlinToObjCBridge(
         ret(retVal)
     }
 
-    LLVMSetLinkage(result, LLVMLinkage.LLVMPrivateLinkage)
+    LLVMSetLinkage(result, LLVMLinkage.LLVMInternalLinkage)
 
     return constPointer(result)
 }
