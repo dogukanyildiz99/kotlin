@@ -23,12 +23,14 @@ import java.lang.reflect.Method;
 public class AbstractCodegenTestCaseOnAndroid extends TestCase {
 
     protected void invokeBoxMethod(Class clazz, String filePath, String expectedResult) throws Exception {
+        Object actualResult = (Object) "EMPTY";
         try {
             Method method = clazz.getMethod("box");
-            assertEquals(expectedResult, method.invoke(null));
+            actualResult = method.invoke(null);
+            assertEquals(expectedResult, actualResult);
         }
         catch (Throwable e) {
-            throw new RuntimeException("File: " + filePath, e);
+            throw new RuntimeException("Result: " + actualResult.toString() + " File: " + filePath, e);
         }
     }
 }
