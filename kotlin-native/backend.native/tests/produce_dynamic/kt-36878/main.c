@@ -9,12 +9,17 @@
 #include "libkt36878_api.h"
 
 int main(int argc, char** argv) {
-    libkt36878_kref_ObjectForExample instance = __ kotlin.root.ObjectForExample._instance ();
-    libkt36878_kref_ValueClass       value =    __ kotlin.root.ObjectForExample.get_nullableVal (instance);
+    libkt36878_kref_ObjectForExample   instance = __ kotlin.root.ObjectForExample._instance ();
+    libkt36878_kref_ValueClass            value = __ kotlin.root.ObjectForExample.get_nullableVal (instance);
+    libkt36878_kref_UsualClass            usual = __ kotlin.root.ObjectForExample.get_usual (instance);
+    libkt36878_kref_kotlin_ByteArray uByteArray = __ kotlin.root.ObjectForExample.get_uByteArray (instance);
+    libkt36878_kref_kotlin_IntArray   uIntArray = __ kotlin.root.ObjectForExample.get_uIntArray (instance);
+    libkt36878_kref_Foo           fooValueClass = __ kotlin.root.ObjectForExample.get_fooValueClass (instance);
+    libkt36878_kref_Foo           fooUsualClass = __ kotlin.root.ObjectForExample.get_fooValueClass (instance);
     __ kotlin.root.ObjectForExample.fooValue             (instance, value);
-    __ kotlin.root.ObjectForExample.fooUsual             (instance, (libkt36878_kref_UsualClass) {0});
-    __ kotlin.root.ObjectForExample.fooUByteArray        (instance, (libkt36878_kref_kotlin_ByteArray){0});
-    __ kotlin.root.ObjectForExample.fooUIntArrayNullable (instance, (libkt36878_kref_kotlin_IntArray) {0});
-    __ kotlin.root.ObjectForExample.fooFooValue          (instance, (libkt36878_kref_Foo) {0});
-    __ kotlin.root.ObjectForExample.fooFooUsual          (instance, (libkt36878_kref_Foo) {0});
+    __ kotlin.root.ObjectForExample.fooUsual             (instance, usual);
+    __ kotlin.root.ObjectForExample.fooUByteArray        (instance, uByteArray);
+    __ kotlin.root.ObjectForExample.fooUIntArrayNullable (instance, uIntArray);
+    __ kotlin.root.ObjectForExample.fooFooValue          (instance, fooValueClass);
+    __ kotlin.root.ObjectForExample.fooFooUsual          (instance, fooUsualClass);
 }

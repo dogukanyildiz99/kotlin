@@ -480,7 +480,7 @@ private class ExportedElement(val kind: ElementKind,
 
     private fun addUsedType(type: KotlinType, set: MutableSet<KotlinType>) {
         if (type.constructor.declarationDescriptor is TypeParameterDescriptor) return
-        set.addIfNotNull(type)
+        set.add(type)
     }
 
     fun addUsedTypes(set: MutableSet<KotlinType>) {

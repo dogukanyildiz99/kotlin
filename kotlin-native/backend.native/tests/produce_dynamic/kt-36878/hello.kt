@@ -4,27 +4,33 @@
  */
 
 value class ValueClass(val number: Int) {}
-class UsualClass(val number: UInt) {}
+class UsualClass(val number: UByte) {}
 class Foo<T>
 
 object ObjectForExample {
     val nullableVal: ValueClass? = ValueClass(153)
+    val usual: UsualClass = UsualClass(128.toUByte())
+    val uByteArray: UByteArray = ubyteArrayOf(0x40.toUByte(), 0x80.toUByte())
+    val uIntArray: UIntArray = intArrayOf(0x40, 0x80).toUIntArray()
+    val fooValueClass = Foo<ValueClass>()
+    val fooUsualClass = Foo<UsualClass>()
     fun fooValue(foo: ValueClass?) {
         println("ValueClass? = $foo")
     }
     fun fooUsual(foo: UsualClass?) {
-        println("UsualClass? = $foo")
+        println("UsualClass? = ${foo?.number}")
     }
     fun fooUByteArray(foo: UByteArray) {
-        println("UByteArray = $foo")
+        println("UByteArray = $foo: ${foo.joinToString()}")
+
     }
     fun fooUIntArrayNullable(foo: UIntArray?) {
-        println("UIntArray? = $foo")
+        println("UIntArray? = $foo: ${foo?.joinToString()}")
     }
     fun fooFooValue(foo: Foo<ValueClass>) {
-        println("Foo<ValueClass> = $foo")
+        println("Foo<ValueClass> = ${foo::class}")
     }
     fun fooFooUsual(foo: Foo<UsualClass>) {
-        println("Foo<UsualClass> = $foo")
+        println("Foo<UsualClass> = ${foo::class}")
     }
 }
