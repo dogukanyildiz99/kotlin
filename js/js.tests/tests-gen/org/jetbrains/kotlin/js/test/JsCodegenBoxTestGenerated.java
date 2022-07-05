@@ -30994,6 +30994,16 @@ public class JsCodegenBoxTestGenerated extends AbstractJsCodegenBoxTest {
         }
 
         @Nested
+        @TestMetadata("compiler/testData/codegen/box/reflection/jvmSerializableLambdas")
+        @TestDataPath("$PROJECT_ROOT")
+        public class JvmSerializableLambdas {
+            @Test
+            public void testAllFilesPresentInJvmSerializableLambdas() throws Exception {
+                KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/reflection/jvmSerializableLambdas"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JS, true);
+            }
+        }
+
+        @Nested
         @TestMetadata("compiler/testData/codegen/box/reflection/kClassInAnnotation")
         @TestDataPath("$PROJECT_ROOT")
         public class KClassInAnnotation {

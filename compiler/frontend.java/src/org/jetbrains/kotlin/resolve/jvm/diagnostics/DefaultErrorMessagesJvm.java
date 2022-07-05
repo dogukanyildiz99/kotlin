@@ -229,6 +229,7 @@ public class DefaultErrorMessagesJvm implements DefaultErrorMessages.Extension {
 
         MAP.put(JAVA_SAM_INTERFACE_CONSTRUCTOR_REFERENCE, "Java SAM interface constructor references are prohibited");
         MAP.put(ENUM_DECLARING_CLASS_DEPRECATED, "Enum.declaringClass is deprecated, use declaringJavaClass instead");
+        MAP.put(BAD_JVM_SERIALIZABLE_LAMBDA, "JvmSerializableLambda annotation can only be applied to a function literal");
     }
 
     @NotNull

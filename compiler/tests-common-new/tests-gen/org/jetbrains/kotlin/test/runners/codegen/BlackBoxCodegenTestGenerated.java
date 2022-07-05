@@ -5988,6 +5988,12 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
         }
 
         @Test
+        @TestMetadata("jvmSerializableLambdasWithRefsAreSerializable.kt")
+        public void testJvmSerializableLambdasWithRefsAreSerializable() throws Exception {
+            runTest("compiler/testData/codegen/box/closures/jvmSerializableLambdasWithRefsAreSerializable.kt");
+        }
+
+        @Test
         @TestMetadata("kt10044.kt")
         public void testKt10044() throws Exception {
             runTest("compiler/testData/codegen/box/closures/kt10044.kt");
@@ -41344,6 +41350,16 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             @TestMetadata("isInstanceCastAndSafeCast.kt")
             public void testIsInstanceCastAndSafeCast() throws Exception {
                 runTest("compiler/testData/codegen/box/reflection/isInstance/isInstanceCastAndSafeCast.kt");
+            }
+        }
+
+        @Nested
+        @TestMetadata("compiler/testData/codegen/box/reflection/jvmSerializableLambdas")
+        @TestDataPath("$PROJECT_ROOT")
+        public class JvmSerializableLambdas {
+            @Test
+            public void testAllFilesPresentInJvmSerializableLambdas() throws Exception {
+                KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/reflection/jvmSerializableLambdas"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
             }
         }
 

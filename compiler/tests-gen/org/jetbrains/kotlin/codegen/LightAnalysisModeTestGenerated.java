@@ -5232,6 +5232,11 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
             runTest("compiler/testData/codegen/box/closures/extensionClosure.kt");
         }
 
+        @TestMetadata("jvmSerializableLambdasWithRefsAreSerializable.kt")
+        public void testJvmSerializableLambdasWithRefsAreSerializable() throws Exception {
+            runTest("compiler/testData/codegen/box/closures/jvmSerializableLambdasWithRefsAreSerializable.kt");
+        }
+
         @TestMetadata("kt10044.kt")
         public void testKt10044() throws Exception {
             runTest("compiler/testData/codegen/box/closures/kt10044.kt");
@@ -33181,6 +33186,19 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
             @TestMetadata("isInstanceCastAndSafeCast.kt")
             public void testIsInstanceCastAndSafeCast() throws Exception {
                 runTest("compiler/testData/codegen/box/reflection/isInstance/isInstanceCastAndSafeCast.kt");
+            }
+        }
+
+        @TestMetadata("compiler/testData/codegen/box/reflection/jvmSerializableLambdas")
+        @TestDataPath("$PROJECT_ROOT")
+        @RunWith(JUnit3RunnerWithInners.class)
+        public static class JvmSerializableLambdas extends AbstractLightAnalysisModeTest {
+            private void runTest(String testDataFilePath) throws Exception {
+                KotlinTestUtils.runTest(this::doTest, TargetBackend.JVM, testDataFilePath);
+            }
+
+            public void testAllFilesPresentInJvmSerializableLambdas() throws Exception {
+                KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/reflection/jvmSerializableLambdas"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
             }
         }
 

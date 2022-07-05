@@ -1297,6 +1297,18 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
             }
 
             @Test
+            @TestMetadata("JvmSerializableLambdaAnnotationFeatureOff.kt")
+            public void testJvmSerializableLambdaAnnotationFeatureOff() throws Exception {
+                runTest("compiler/testData/diagnostics/tests/annotations/JvmSerializableLambdaAnnotationFeatureOff.kt");
+            }
+
+            @Test
+            @TestMetadata("JvmSerializableLambdaAnnotationFeatureOn.kt")
+            public void testJvmSerializableLambdaAnnotationFeatureOn() throws Exception {
+                runTest("compiler/testData/diagnostics/tests/annotations/JvmSerializableLambdaAnnotationFeatureOn.kt");
+            }
+
+            @Test
             @TestMetadata("kt1860-negative.kt")
             public void testKt1860_negative() throws Exception {
                 runTest("compiler/testData/diagnostics/tests/annotations/kt1860-negative.kt");
