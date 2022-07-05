@@ -6,7 +6,6 @@
 #include "testlib_api.h"
 #define __ testlib_symbols()->
 
-#include "libkt39015_api.h"
 #include <stdio.h>
 
 int main(int argc, char** argv) {

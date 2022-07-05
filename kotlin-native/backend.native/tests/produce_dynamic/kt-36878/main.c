@@ -6,8 +6,6 @@
 #include "testlib_api.h"
 #define __ testlib_symbols()->
 
-#include "libkt36878_api.h"
-
 int main(int argc, char** argv) {
     libkt36878_kref_ObjectForExample   instance = __ kotlin.root.ObjectForExample._instance ();
     libkt36878_kref_ValueClass            value = __ kotlin.root.ObjectForExample.get_nullableVal (instance);
